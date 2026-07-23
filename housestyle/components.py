@@ -2,18 +2,31 @@
 Meridian chart anatomy — the recurring pieces that make a chart recognizable
 at a glance: a kicker+headline+dek header with the signature accent tick,
 a highlight-one/mute-the-rest convention for series emphasis, and a
-source/mark footer. Built on plain matplotlib calls, no dependencies beyond
-matplotlib itself.
+source/credit footer. Built on plain matplotlib calls, no dependencies
+beyond matplotlib itself.
 """
+import datetime
+
 import matplotlib.pyplot as plt
 
 from .colors import LIGHT, DARK
 
 MARK = "▪"  # the signature square tick, printed before every kicker
+BRAND_NAME = "Waltzing Analytics"
+AUTHOR = "Marc Lamberts"
 
 
-def header(fig, kicker, title, dek=None, palette=LIGHT, top=0.86, left=0.06):
-    """Kicker (accent, small caps) + headline (serif) + dek (sans, muted).
+def brand_mark(fig, palette=LIGHT, right=0.94, y=0.97):
+    """The Waltzing Analytics wordmark — always top right, on every chart."""
+    fig.text(right, y, BRAND_NAME, fontsize=11.5, fontweight="bold",
+              color=palette["ink_primary"], family="serif", style="italic",
+              ha="right", va="top")
+    return fig
+
+
+def header(fig, kicker, title, dek=None, palette=LIGHT, top=0.86, left=0.06, right=0.94):
+    """Kicker (accent, small caps) + headline (serif) + dek (sans, muted),
+    plus the Waltzing Analytics wordmark, top right, always.
 
     Reserve figure space above the axes for this (e.g. fig.subplots_adjust
     (top=top - 0.08) before calling, or build the figure with a GridSpec
@@ -28,19 +41,22 @@ def header(fig, kicker, title, dek=None, palette=LIGHT, top=0.86, left=0.06):
         fig.text(left, y - 0.055 - 0.055, dek, fontsize=10.5,
                   color=palette["ink_secondary"], family="sans-serif",
                   ha="left", va="top")
+    brand_mark(fig, palette=palette, right=right, y=y)
     return fig
 
 
-def footer(fig, source, note=None, wordmark="Meridian", palette=LIGHT, left=0.06, right=0.94):
-    """Hairline rule + source/note (left) + wordmark (right)."""
+def footer(fig, source, note=None, palette=LIGHT, left=0.06, right=0.94, author=AUTHOR):
+    """Hairline rule + source/note (bottom left) + credit line (bottom right),
+    always "<author> | Created on dd-mm-yyyy" with today's date."""
     y = 0.045
     fig.add_artist(plt.Line2D([left, right], [y + 0.028, y + 0.028],
                                transform=fig.transFigure, color=palette["axis"], linewidth=0.8))
     text = f"Source: {source}" + (f"   {note}" if note else "")
     fig.text(left, y, text, fontsize=8.5, color=palette["ink_muted"],
               family="sans-serif", ha="left", va="top")
-    fig.text(right, y, wordmark, fontsize=8.5, color=palette["ink_muted"],
-              family="sans-serif", ha="right", va="top", style="italic")
+    credit = f"{author} | Created on {datetime.date.today().strftime('%d-%m-%Y')}"
+    fig.text(right, y, credit, fontsize=8.5, color=palette["ink_muted"],
+              family="sans-serif", ha="right", va="top")
     return fig
 
 

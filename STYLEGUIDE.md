@@ -117,18 +117,30 @@ never color alone.
 
 1. **Header** — `▪ KICKER` in terracotta small caps, then a serif headline
    phrased as a finding ("Growth cooled in Q3"), then an optional sans dek
-   with the exact metric/period.
+   with the exact metric/period. The **Waltzing Analytics** wordmark (bold
+   italic serif) sits top right, always — `components.header()` draws it
+   automatically; call `components.brand_mark()` directly for any chart
+   that skips `header()`.
 2. **Plot** — warm paper surface, no border box, baseline only, hairline
    horizontal gridlines behind the data, thin 2px marks with rounded caps.
 3. **Emphasis** — one series/category in terracotta (or ink blue if
    terracotta is reserved elsewhere on the same page); everything else in
    shared axis-gray. Direct-label the emphasized mark instead of a legend
    box when there are ≤ 3 lines.
-4. **Footer** — hairline rule, `Source: …` in muted ink (left), `Meridian`
-   wordmark in muted italic (right).
+4. **Footer** — hairline rule, `Source: …` in muted ink (bottom left),
+   and `Marc Lamberts | Created on dd-mm-yyyy` (bottom right, today's date
+   filled in automatically at render time) — always, on every chart.
 5. **Dark mode** is a selected alternative, not an automatic invert — use
    `style.apply("dark")`, which swaps to the validated dark steps and the
    dark surface, never a CSS-filter-style flip.
+
+## Branding (fixed, on every chart)
+
+- **Top right:** `Waltzing Analytics` wordmark — `components.brand_mark()`,
+  called automatically by `components.header()`.
+- **Bottom right:** `Marc Lamberts | Created on dd-mm-yyyy` —
+  `components.footer()`, date computed from the system clock at render
+  time (`datetime.date.today()`), never hardcoded.
 
 ## Usage
 
