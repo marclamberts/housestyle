@@ -117,10 +117,11 @@ never color alone.
 
 1. **Header** — `▪ KICKER` in terracotta small caps, then a serif headline
    phrased as a finding ("Growth cooled in Q3"), then an optional sans dek
-   with the exact metric/period. The **Waltzing Analytics** wordmark (bold
-   italic serif) sits top right, always — `components.header()` draws it
-   automatically; call `components.brand_mark()` directly for any chart
-   that skips `header()`.
+   with the exact metric/period. The **Waltzing Analytics** logo lockup —
+   a bold "WA" monogram in the signature accent, a hairline divider, then
+   "WALTZING ANALYTICS" over "MARC LAMBERTS" in tracked-out caps — sits top
+   right, always. `components.header()` draws it automatically; call
+   `components.brand_mark()` directly for any chart that skips `header()`.
 2. **Plot** — warm paper surface, no border box, baseline only, hairline
    horizontal gridlines behind the data, thin 2px marks with rounded caps.
 3. **Emphasis** — one series/category in terracotta (or ink blue if
@@ -136,8 +137,8 @@ never color alone.
 
 ## Branding (fixed, on every chart)
 
-- **Top right:** `Waltzing Analytics` wordmark — `components.brand_mark()`,
-  called automatically by `components.header()`.
+- **Top right:** the Waltzing Analytics "WA" monogram + wordmark lockup —
+  `components.brand_mark()`, called automatically by `components.header()`.
 - **Bottom right:** `Marc Lamberts | Created on dd-mm-yyyy` —
   `components.footer()`, date computed from the system clock at render
   time (`datetime.date.today()`), never hardcoded.
